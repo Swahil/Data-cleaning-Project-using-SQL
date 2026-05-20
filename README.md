@@ -42,9 +42,9 @@ Describe the dataset.
 | Feature | Description |
 |---|---|
 | Source | simulated shipment records / CSV |
-| Rows | 50,000 |
+| Rows | 25 |
 | Columns | 12 |
-| Format | CSV / SQL Table |
+| Format | CSV |
 | Domain | Logistics |
 
 The dataset contains shipment records collected from a warehouse management system database  between Jan/01/2025 and Mar/10/2025.
@@ -243,10 +243,11 @@ During the data cleaning process, several technical and data-related challenges 
 ## Outcome
 
 These challenges were resolved using SQL techniques such as data type conversion, string standardization and validation queries, resulting in a clean and reliable dataset.
+The raw data was riddled with entry errors, inconsistencies, and missing values accumulated over years of manual data entry across multiple warehouses. The dataset was cleaned and standardized  so it can reliably power operational dashboards, freight cost analysis, and carrier performance reporting.
 ---
 
 # Author
-
+ 
 **Benjamin Njoroge Githua**  
 - GitHub: https://github.com/Swahil  
 - Email: benjaminnjoroge7@gmail.com  

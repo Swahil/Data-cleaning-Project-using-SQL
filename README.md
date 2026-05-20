@@ -173,9 +173,11 @@ Load the raw dataset into your database using one of the following methods:
 
 Execute the SQL scripts sequentially to recreate tables, clean data, and validate results:
 
-01_create_tables.sql
-02_data_cleaning.sql
-03_validation_queries.sql
+  01_create_tables.sql
+  
+  02_data_cleaning.sql
+  
+  03_validation_queries.sql
 
 Make sure each script runs successfully before moving to the next.
 ---

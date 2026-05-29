@@ -16,8 +16,6 @@ Cleaning a logistics company exports shipment's records  using SQL for analytics
 - [Key Findings](#key-findings)
 - [Before vs After Cleaning](#before-vs-after-cleaning)
 - [Challenges Encountered](#challenges-encountered)
-- [Future Improvements](#future-improvements)
-- [Conclusion](#conclusion)
 - [Author](#author)
 - [License](#license)
 
@@ -225,6 +223,10 @@ The final cleaned dataset is exported for use in analysis, reporting, or visuali
 - Data formatting issues (dates, text casing, spacing) were fully resolved
 - Dataset quality was significantly improved, making it ready for analysis and reporting
 ---
+# before-vs-after-cleaning
+
+
+
 # Challenges Encountered
 
 During the data cleaning process, several technical and data-related challenges were identified and addressed.

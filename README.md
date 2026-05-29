@@ -226,7 +226,7 @@ The final cleaned dataset is exported for use in analysis, reporting, or visuali
 # Before-vs-after-cleaning
 ![Before_cleaning](image-path-or-url)
 
-![After_cleaning](image-path-or-url)
+![After_cleaning](image/cleaned_shipment.png)
 
 
 

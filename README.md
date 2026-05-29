@@ -224,7 +224,7 @@ The final cleaned dataset is exported for use in analysis, reporting, or visuali
 - Dataset quality was significantly improved, making it ready for analysis and reporting
 ---
 # Before-vs-after-cleaning
-![Before_cleaning](image-path-or-url)
+![Before_cleaning](image/dirty_shipment.png)
 
 ![After_cleaning](image/cleaned_shipment.png)
 

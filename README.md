@@ -80,6 +80,21 @@ This section outlines the key data cleaning operations carried out to improve da
 ## 1. Removing Duplicates
 
 Duplicate records were identified and removed to ensure data accuracy and eliminate redundancy.
+```python
+/*CLEANING DUPLICATES*/
+--Deletes duplicate rows
+WITH duplicate AS (
+	SELECT 
+	*,
+		ROW_NUMBER() OVER (PARTITION BY destination_state,origin_warehouse,destination_city,weight_kg,freight_cost ORDER BY ship_date DESC)
+	AS rn
+FROM shipments)
+DELETE FROM shipments 
+WHERE shipment_id IN (
+SELECT shipment_id
+FROM duplicate 
+WHERE rn > 1);
+```
 
 ### Tasks Performed:
 - Used `ROW_NUMBER()` window function to detect duplicate entries
@@ -107,6 +122,63 @@ Inconsistent and incorrect values were cleaned to improve data consistency.
 ## 5. Data Type Conversion
 
 Columns were converted into appropriate data types to ensure accurate processing and analysis.
+
+```sql
+/*CLEANING*/
+CREATE TABLE cleaned_shipments AS
+SELECT 
+    REGEXP_REPLACE(shipment_id, 'SHP-', '') AS shipment_id,
+    
+    REGEXP_REPLACE(INITCAP(TRIM(origin_warehouse)),'Warehouse','')   AS origin_warehouse,
+    
+    INITCAP(COALESCE(NULLIF(TRIM(destination_city),''),'Unknown')) AS destination_city,
+        
+    UPPER(TRIM(destination_state)) AS destination_state,
+    
+    INITCAP(TRIM(carrier))AS carrier,
+    
+   CASE 
+   		WHEN ship_date ~ '^\d{1,2}/\d{1,2}/\d{4}$' 
+   			THEN TO_DATE(ship_date,'MM/DD/YYYY')
+   		--FEB 10 2024
+   		WHEN ship_date ~ '^[A-Za-z]{3} \d{1,2} \d{4}$'
+   			THEN TO_DATE(ship_date,'Mon DD YYYY')
+   		--March 12 2024
+   		WHEN ship_date ~ '^[A-Za-z]{5} \d{1,2} \d{4}$'
+   				THEN TO_DATE(ship_date,'Month DD YYYY')
+   		ELSE NULL
+   		END AS ship_date,
+   
+    CASE 
+    -- Format: M/D/YYYY or MM/DD/YYYY
+    WHEN delivery_date ~ '^\d{1,2}/\d{1,2}/\d{4}$'
+      THEN TO_DATE(delivery_date, 'MM/DD/YYYY')
+
+    -- Format: Feb 15 2024 (short month)
+    WHEN delivery_date ~ '^[A-Za-z]{3} \d{1,2} \d{4}$'
+      THEN TO_DATE(delivery_date, 'Mon DD YYYY')
+
+    -- Format: March 12 2024 (full month)
+    WHEN delivery_date ~ '^[A-Za-z]+ \d{1,2} \d{4}$'
+      THEN TO_DATE(delivery_date, 'Month DD YYYY')
+    ELSE NULL
+  END AS delivery_date,
+    
+    ABS(weight_kg) AS weight_kg,
+    
+    COALESCE(freight_cost,0) AS freight_cost,
+    
+    INITCAP(shipment_status) AS shipment_status,
+    
+    CASE  
+	    WHEN items_count = '0' THEN NULL
+	    ELSE ABS(items_count) 
+	END AS items_count,
+    
+    damage_reported
+FROM shipments;
+
+```
 
 ### Tasks Performed:
 - Converted text fields into date data types where necessary using regular expression pattern match operator.
